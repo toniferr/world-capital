@@ -11,6 +11,9 @@ export default function Worldle({solution}) {
   },[handleKeyup])
 
   return (
-    <div>current guess - {currentGuess}</div>
+    <div>
+      <div>solution - {solution}</div>
+      <div>current guess - {currentGuess}</div>
+    </div>    
   )
 }

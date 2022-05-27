@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const useWorldle = () => {
+const useWorldle = (solution) => {
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState('')
     const [guesses, setGuesses] = useState([]) //array chars
@@ -10,7 +10,29 @@ const useWorldle = () => {
   //format a guess into an array of letter objects
   //e.g. [{key: 'a', color: 'yellow'}]
   const formatGuess = () => {
-    console.log("formatting the guess - ", currentGuess)
+      let solutionArray = [...solution]
+      let formattedGuess = [...currentGuess].map((l) => {
+        return {key: l, color: 'grey'}
+      })
+
+      //find any green letters
+      formattedGuess.forEach((l,i) => {
+          if (solutionArray[i] === l.key) {
+            formattedGuess[i].color = 'green'
+            solutionArray[i] = null
+          }
+      })
+
+      //find any yellow letters
+      formattedGuess.forEach((l,i) => {
+        if (solutionArray.includes(l.key) && l.color !== 'green') {
+          formattedGuess[i].color = 'yellow'
+          solutionArray[solutionArray.indexOf(l.key)] = null
+        }
+    })
+
+    return formattedGuess
+
   }
 
   //add a new guess to the guesses state
@@ -39,7 +61,8 @@ const useWorldle = () => {
         console.log("word must be 5 chars long")
         return
       }
-      formatGuess(currentGuess)
+      const formatted = formatGuess(currentGuess)
+      console.log(formatted)
     }
     if (key === 'Backspace') {
      setCurrentGuess((prev) => {
