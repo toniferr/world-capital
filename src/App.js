@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Worldle from "./components/Worldle";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
   return (
     <div className="App">
       <h1>Worldle Cities</h1>
-      {solution && <div>La solucion es: {solution}</div>}
+      {solution && <Worldle solution={solution}/>}
     </div>
   );
 }
