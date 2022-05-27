@@ -1,7 +1,23 @@
+import { useEffect, useState } from "react";
+
 function App() {
+
+  const [solution, setSolution] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/solutions')
+      .then(rest => rest.json())
+      .then(json => {
+        //random int between 0 & 19
+        const randomSolution = json[Math.floor(Math.random()*json.length)]
+        setSolution(randomSolution.word)
+      })
+  }, [setSolution])
+
   return (
     <div className="App">
-      <h1>Wordle Capital</h1>
+      <h1>Worldle Cities</h1>
+      {solution && <div>La solucion es: {solution}</div>}
     </div>
   );
 }
@@ -18,7 +34,7 @@ data we need to track:
     -- each past guess is an array of letter objects [{}, {}, {}, {}, {}]
     -- each object represents a letter in the guess word {letter: 'a', color: 'yellow'}
   -- current guess
-    -- string 'hello'
+    -- string 'palma'
   -- keypad letters
     -- array of letter objects [{key: 'a', color: 'green'}, {}, {} ...]
   -- number of turns
@@ -45,5 +61,11 @@ game process:
       -- modal to say 'well done'
     -- when the user runs out of guesses
       -- modal to say 'unlucky'
+
+
+  --solution data
+    -- 3rd party api
+    -- own database (e.g. mongodb)
+    -- json file 
 
 */
