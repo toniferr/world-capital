@@ -3,7 +3,7 @@ import { useState } from "react"
 const useWorldle = (solution) => {
     const [turn, setTurn] = useState(0)
     const [currentGuess, setCurrentGuess] = useState('')
-    const [guesses, setGuesses] = useState([]) //array chars
+    const [guesses, setGuesses] = useState([...Array(6)]) //array chars
     const [history, setHistory] = useState([]) //array strings
     const [isCorrect, setIsCorrect] = useState(false)
 
@@ -38,8 +38,22 @@ const useWorldle = (solution) => {
   //add a new guess to the guesses state
   //update the isCorrect state if the guess is correct
   //add one to the turn state
-  const addNewGuess = () => {
-      
+  const addNewGuess = (formattedGuess) => {
+      if (currentGuess === solution) {
+        setIsCorrect(true)
+      }
+      setGuesses((prevGuesses) => {
+        let newGuesses = [...prevGuesses]
+        newGuesses[turn] = formattedGuess
+        return newGuesses
+      })
+      setHistory((prevHistory) => {
+        return [...prevHistory, currentGuess]
+      })
+      setTurn((prevTurn) => {
+        return prevTurn + 1
+      })
+      setCurrentGuess('')
   }
 
   //handle keyup even & track currect guess
@@ -62,7 +76,7 @@ const useWorldle = (solution) => {
         return
       }
       const formatted = formatGuess(currentGuess)
-      console.log(formatted)
+      addNewGuess(formatted)
     }
     if (key === 'Backspace') {
      setCurrentGuess((prev) => {
