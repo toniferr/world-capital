@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import useWorldle from '../hooks/useWorldle'
+import Grid from './Grid'
 
 export default function Worldle({solution}) {
   
@@ -18,6 +19,7 @@ export default function Worldle({solution}) {
     <div>
       <div>solution - {solution}</div>
       <div>current guess - {currentGuess}</div>
+      <Grid currentGuess={currentGuess} guesses={guesses} turn={turn}/>
     </div>    
   )
 }
